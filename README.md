@@ -6,7 +6,7 @@ NOTE: Only the backend repo needs a .env setup so you can create one by copying 
 This project is a micro-frontend architecture application consisting of a backend server and three frontend modules: email, chat-room, and host-app. The backend handles API requests, database interactions, authentication, and real-time communication. The host-app integrates the email and chat-room microfrontends using Module Federation. The application allows users to manage emails and participate in real-time chat rooms, with a shared backend for data persistence and security.
 
 The project structure is as follows:
-- **backend/**: Node.js server with Express and Prisma for API and database management.
+- **backend/**: Node.js server with Express and Prisma for API and database management and postgreSQL as the database.
 - **email/**: React microfrontend for email functionality.
 - **chat-room/**: React microfrontend for real-time chat.
 - **host-app/**: React host application that federates and integrates the microfrontends.
