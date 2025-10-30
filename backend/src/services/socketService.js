@@ -1,5 +1,4 @@
 const { Server } = require("socket.io");
-const { prisma } = require("../config/database");
 
 class SocketService {
   constructor(server) {

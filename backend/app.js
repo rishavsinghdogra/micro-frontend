@@ -9,6 +9,7 @@ const { connectDB } = require('./src/config/database');
 const authRoutes = require('./src/routes/auth');
 const messageRoutes = require('./src/routes/messages');
 const roomRoutes = require('./src/routes/room');
+const emailRoutes = require('./src/routes/email');
 
 // Global error handler
 const globalErrorHandler = require('./src/middleware/error');
@@ -59,6 +60,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/rooms', roomRoutes);
+app.use('/api/email', emailRoutes);
 
 // Handle undefined routes
 app.use((req, res, next) => {
