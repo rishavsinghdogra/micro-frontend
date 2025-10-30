@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import axios from 'axios';
 
 interface Email {
   id: string;
@@ -83,8 +84,7 @@ const fetchEmailById = async (id: string): Promise<Email> => {
 };
 
 const sendEmail = async (payload: SendEmailPayload): Promise<void> => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  console.log('Sending email:', payload);
+  await axios.post('localhost:3000/api/email/send', payload);
 };
 
 

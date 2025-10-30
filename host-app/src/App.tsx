@@ -1,7 +1,9 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home, FileText } from 'lucide-react';
-import RemoteApp from 'chat_app/App';
+import React, { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Home, FileText } from "lucide-react";
+const RemoteChatApp = lazy(() => import("chat_app/App"));
+const RemoteEmailApp = lazy(() => import("email_app/App"));
+
 import {
   Sidebar,
   SidebarContent,
@@ -13,90 +15,20 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from '@/components/ui/sidebar';
+} from "@/components/ui/sidebar";
 
 const navItems = [
   {
-    title: 'Chat Room',
-    url: '/chat-room',
+    title: "Chat Room",
+    url: "/chat-room",
     icon: Home,
   },
   {
-    title: 'Email',
-    url: '/email',
+    title: "Email",
+    url: "/email",
     icon: FileText,
   },
 ];
-
-const ChatRoom: React.FC = () => {
-  return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4">Chat Room</h1>
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-4">Sample Chat Interface</h2>
-        <div className="space-y-4">
-          <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <p className="font-medium">User 1:</p>
-            <p>Hello! How can I help you today?</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm border">
-            <p className="font-medium">You:</p>
-            <p>I'm looking for information about your services.</p>
-          </div>
-          <div className="mt-6">
-            <input
-              type="text"
-              placeholder="Type your message here..."
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-              Send Message
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const Email: React.FC = () => {
-  return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4">Email</h1>
-      <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-4">Sample Email Interface</h2>
-        <div className="space-y-4">
-          <div className="bg-white p-4 rounded-lg shadow-sm border cursor-pointer hover:bg-gray-50">
-            <div className="flex justify-between items-center">
-              <p className="font-medium">John Doe</p>
-              <span className="text-sm text-gray-500">10:30 AM</span>
-            </div>
-            <p className="text-gray-600">Meeting scheduled for tomorrow</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm border cursor-pointer hover:bg-gray-50">
-            <div className="flex justify-between items-center">
-              <p className="font-medium">Jane Smith</p>
-              <span className="text-sm text-gray-500">9:15 AM</span>
-            </div>
-            <p className="text-gray-600">Project update and deliverables</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-sm border cursor-pointer hover:bg-gray-50">
-            <div className="flex justify-between items-center">
-              <p className="font-medium">Team Updates</p>
-              <span className="text-sm text-gray-500">Yesterday</span>
-            </div>
-            <p className="text-gray-600">Weekly team newsletter</p>
-          </div>
-        </div>
-        <div className="mt-6">
-          <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">
-            Compose New Email
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const HomePage: React.FC = () => {
   return (
@@ -140,10 +72,10 @@ const AppSidebar: React.FC = () => {
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -167,13 +99,15 @@ const App: React.FC = () => {
               <SidebarTrigger />
               <h1 className="text-lg font-semibold">Main Content Area</h1>
             </header>
-            
+
             {/* Routes */}
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/chat-room" element={<RemoteApp />} />
-              <Route path="/email" element={<Email />} />
-            </Routes>
+            <Suspense fallback={<div>Loading Chat App...</div>}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/chat-room" element={<RemoteChatApp />} />
+                <Route path="/email" element={<RemoteEmailApp />} />
+              </Routes>
+            </Suspense>
           </main>
         </div>
       </SidebarProvider>

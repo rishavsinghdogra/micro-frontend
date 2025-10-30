@@ -14,9 +14,7 @@ export default defineConfig({
       filename: "remoteEntry.js",
       remotes: {
         chat_app: "http://localhost:5174/assets/remoteEntry.js",
-      },
-      exposes: {
-        "./App": "./src/App.tsx",
+        email_app: "http://localhost:5175/assets/remoteEntry.js",
       },
       shared: ["react", "react-dom"],
     }),

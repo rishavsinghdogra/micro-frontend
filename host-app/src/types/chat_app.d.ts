@@ -1,5 +1,5 @@
 
 declare module 'chat_app/App' {
-  const RemoteApp: React.FC;
-  export default RemoteApp;
+  const RemoteChatApp: React.FC;
+  export default RemoteChatApp;
 }
