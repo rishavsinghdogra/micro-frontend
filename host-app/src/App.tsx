@@ -1,36 +1,87 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { Button } from './components/ui/button'
-import './App.css'
+import React from 'react';
+import { Home, FileText, } from 'lucide-react';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar';
 
-function App() {
-  const [count, setCount] = useState(0)
 
+const navItems = [
+  {
+    title: 'Chat Room',
+    url: '/chat-room',
+    icon: Home,
+  },
+  {
+    title: 'Email',
+    url: '/email',
+    icon: FileText,
+  },
+];
+
+const AppSidebar: React.FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div >
-        <Button  onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </Button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs text-amber-300">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Sidebar>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {navItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  );
+};
 
-export default App
+const App: React.FC = () => {
+  return (
+    <SidebarProvider>
+      <div className="flex h-screen w-full">
+        <AppSidebar />
+        <main className="flex flex-1 flex-col">
+          {/* Header */}
+          <header className="flex h-16 items-center gap-4 border-b bg-background px-6">
+            <SidebarTrigger />
+            <h1 className="text-lg font-semibold">Main Content Area</h1>
+          </header>
+          
+          {/* Main Content - Empty area ready for components */}
+          <div className="flex-1 overflow-auto p-6">
+            <div className="flex h-full items-center justify-center">
+              <div className="text-center">
+                <h2 className="text-2xl font-semibold text-foreground mb-2">
+                  Welcome to Your App
+                </h2>
+                <p className="text-muted-foreground">
+                  This is the main content area where you can render your components.
+                </p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </SidebarProvider>
+  );
+};
+
+export default App;
